@@ -1,9 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from fireapp.core.firebase import firestore, auth
-from google.cloud.firestore_v1 import FieldFilter
-from fireapp.serializers import LoginSerializer
 from fireapp.models import UserModel
+from fireapp.serializers import LoginSerializer
 
 
 class LoginView(generics.GenericAPIView):

@@ -38,7 +38,7 @@ class RegisterView(generics.CreateAPIView):
         password = data['password']
         confirm_password = data['confirm_password']
 
-        print(data)
+        # print(data)
         if password == confirm_password:
             data.pop('csrfmiddlewaretoken', None)
             data.pop('confirm_password', None)

@@ -1,19 +1,23 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-@api_view(['GET'])
-def api(request):
+class APIRoot(APIView):
     """
-    Return a list of all the existing api endpoints.
+    This is the base class for all api views.
     """
-    secure = request.is_secure()
-    host = request.META.get('HTTP_HOST')
-    origin = f'http{secure and "s" or ""}://{host}'
-    routes = [
-        f'{origin}/api/register/',
-        f'{origin}/api/login/',
-        f'{origin}/api/chat/',
-    ]
 
-    return Response(routes)
+    def get(self, request, *args, **kwargs):
+        """
+        Return a list of all the existing api endpoints.
+        """
+
+        context = {
+            'routes': [
+                {'register': f'{request.scheme}://{request.get_host()}/api/register'},
+                {'login': f'{request.scheme}://{request.get_host()}/api/login'},
+                {'chat': f'{request.scheme}://{request.get_host()}/api/chat'},
+            ]
+        }
+
+        return Response(context, status=200)

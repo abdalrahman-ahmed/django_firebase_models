@@ -1,9 +1,7 @@
-from fireapp.core.firebase import firestore
-from google.cloud.firestore_v1 import Query
 from rest_framework import generics
 from rest_framework.response import Response
-from fireapp.serializers import ChatSerializer
 from fireapp.models import ChatModel
+from fireapp.serializers import ChatSerializer
 
 
 class ChatView(generics.CreateAPIView):
