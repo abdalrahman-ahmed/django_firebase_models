@@ -29,11 +29,16 @@ source venv/bin/activate
 ```shell
 python -m pip install -r requirements.txt
 ```
+### Create a firebase project
+#### Go to [Firebase Console](https://console.firebase.google.com/)
+#### Create a new project
+#### Go to project settings
+#### Go to service accounts
+#### Click on generate new private key
+#### Rename the downloaded file to `firebase_config.json`
+#### Move the file to the project directory
 ### Run the server
 ```shell
 python manage.py runserver
 ```
-### Open the browser and go to
-```shell
-http://127.0.0.1:8000/
-```
+### Open the browser and Go to (http://127.0.0.1:8000/)
