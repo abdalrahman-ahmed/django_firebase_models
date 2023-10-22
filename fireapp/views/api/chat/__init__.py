@@ -33,7 +33,7 @@ class ChatView(generics.CreateAPIView):
     }
 
     def get(self, request):
-        if not request.User:
+        if not request.user.is_authenticated:
             return Response(data=self.unauthorized_response, status=401)
         else:
             chat = ChatModel.get_all()
@@ -42,10 +42,10 @@ class ChatView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         self.get_serializer(data=request.data).is_valid(raise_exception=True)
 
-        if not request.User:
+        if not request.user.is_authenticated:
             return Response(data=self.unauthorized_response, status=401)
         else:
-            sender_id = int(request.User['id'])
+            sender_id = int(request.user.id)
             data = request.data.dict()
             data.pop('csrfmiddlewaretoken', None)
             data.pop('authorization', None)
