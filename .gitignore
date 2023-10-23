@@ -161,3 +161,4 @@ cython_debug/
 
 # Firebase configuration file
 firebase_config.json
+firebase_config.json.old

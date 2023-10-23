@@ -34,13 +34,12 @@ class RegisterView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         self.get_serializer(data=request.data).is_valid(raise_exception=True)
 
-        data = request.data.dict()
+        data = {field: value for field, value in request.data.items() if field != 'csrfmiddlewaretoken'}
+
         password = data['password']
         confirm_password = data['confirm_password']
 
-        # print(data)
         if password == confirm_password:
-            data.pop('csrfmiddlewaretoken', None)
             data.pop('confirm_password', None)
             user = UserModel.register(data)
 

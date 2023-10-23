@@ -15,13 +15,6 @@ class ChatSerializer(serializers.ModelSerializer):
         style={'input_type': 'text', 'placeholder': 'Message'}
     )
 
-    authorization = serializers.CharField(
-        write_only=True,
-        required=True,
-        help_text='This field is for testing purposes only through the \'Django REST Framework\'.',
-        style={'input_type': 'text', 'placeholder': 'Ex: Bearer eyJhbGciO...'}
-    )
-
     class Meta:
         model = ChatModel
-        fields = ('receiver_id', 'message', 'authorization')
+        fields = ('receiver_id', 'message')

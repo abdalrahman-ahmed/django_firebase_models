@@ -1,8 +1,8 @@
+from django.contrib.auth.models import User
 from django.utils.deprecation import MiddlewareMixin
+
 from fireapp.core.firebase import auth
 from fireapp.models import UserModel
-from django.contrib.auth.models import User
-from django.conf import settings
 
 
 class FirebaseAuthenticationMiddleware(MiddlewareMixin):
@@ -10,8 +10,7 @@ class FirebaseAuthenticationMiddleware(MiddlewareMixin):
 
     def process_request(self, request):
         authorization_header = str(request.META.get('HTTP_AUTHORIZATION'))
-        if settings.DEBUG and not authorization_header.startswith('Bearer '):
-            authorization_header = request.method == 'POST' and request.POST.get('authorization') or ""
+
         if authorization_header and authorization_header.startswith('Bearer '):
             token = authorization_header.split(' ')
             if len(token) > 1:

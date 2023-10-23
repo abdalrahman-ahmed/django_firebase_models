@@ -2,22 +2,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class APIRoot(APIView):
+class ApiView(APIView):
     """
-    This is the base class for all api views.
+    Return a list of all the existing api endpoints.
     """
+
+    paths = ['register', 'login', 'chat']
 
     def get(self, request, *args, **kwargs):
-        """
-        Return a list of all the existing api endpoints.
-        """
+        scheme = request.scheme
+        host = request.get_host()
+        origin = f'{scheme}://{host}'
 
-        context = {
-            'routes': [
-                {'register': f'{request.scheme}://{request.get_host()}/api/register'},
-                {'login': f'{request.scheme}://{request.get_host()}/api/login'},
-                {'chat': f'{request.scheme}://{request.get_host()}/api/chat'},
-            ]
-        }
+        routes = [{name: f'{origin}/api/{name}/'} for name in self.paths]
 
-        return Response(context, status=200)
+        context = {'routes': routes}
+
+        return Response(context)

@@ -1,0 +1,105 @@
+GET http://localhost:8000/api/
+Accept: application/json
+
+### Text Body
+POST http://localhost:8000/api/register/
+Content-Type: application/json
+
+{
+  "name": "Demo",
+  "email": "demo@demo.com",
+  "phone": "1234567890",
+  "password": "12345678",
+  "confirm_password": "12345678"
+}
+
+### Form Data
+POST http://localhost:8000/api/register/
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="name"
+
+Demo
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="email"
+
+demo@demo.com
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="phone"
+
+1234567890
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+12345678
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="confirm_password"
+
+12345678
+--WebAppBoundary--
+
+### Form Data
+POST http://localhost:8000/api/login/
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="email"
+
+demo@demo.com
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+
+12345678
+--WebAppBoundary--
+
+### Text Body
+POST http://localhost:8000/api/login/
+Content-Type: application/json
+
+{
+  "email": "demo@demo.com",
+  "password": "12345678"
+}
+
+### Authorization by token
+GET http://localhost:8000/api/chat/
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjAzZDA3YmJjM2Q3NWM2OTQyNzUxMGY2MTc0ZWIyZjE2NTQ3ZDRhN2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY29ubmVjdGFwcC1sdGQiLCJhdWQiOiJjb25uZWN0YXBwLWx0ZCIsImF1dGhfdGltZSI6MTY5ODA1MjE3OSwidXNlcl9pZCI6IjIyIiwic3ViIjoiMjIiLCJpYXQiOjE2OTgwNTIxNzksImV4cCI6MTY5ODA1NTc3OSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.ZSAF874I5ba0TbzzE2zd5Up34yD5dE7GPeuNN-v0iq-B3VWRi7bB1_Bkbx8zml6yBOWKskFougdIdq1wc1Ox2cWhXppirS4DBXhZAZSK3jdWiNroCQwS4wJcrkmeZTPD_JlCf-NBQ87pX5_c0bmFQMPapkXLSXv0LWBUKSfl22tJE1d5UdicszAXWweZ8UGISonaxIqYRbSGBKWHqzj9bCG6TdX2lLo376gND2CZohT_sQqRHnydpK_sMgc39HgQ8Qb_xnMCI4Q4qOFDIuSiGtynP24hxjtfdIyHEYv5R9it1V_dEpzzk89hTnYUU4TkN9WMKyKxMsVE8B6-xdGXuQ
+
+### Authorization by token, Text Body
+POST http://localhost:8000/api/chat/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjAzZDA3YmJjM2Q3NWM2OTQyNzUxMGY2MTc0ZWIyZjE2NTQ3ZDRhN2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY29ubmVjdGFwcC1sdGQiLCJhdWQiOiJjb25uZWN0YXBwLWx0ZCIsImF1dGhfdGltZSI6MTY5ODA1MjE3OSwidXNlcl9pZCI6IjIyIiwic3ViIjoiMjIiLCJpYXQiOjE2OTgwNTIxNzksImV4cCI6MTY5ODA1NTc3OSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.ZSAF874I5ba0TbzzE2zd5Up34yD5dE7GPeuNN-v0iq-B3VWRi7bB1_Bkbx8zml6yBOWKskFougdIdq1wc1Ox2cWhXppirS4DBXhZAZSK3jdWiNroCQwS4wJcrkmeZTPD_JlCf-NBQ87pX5_c0bmFQMPapkXLSXv0LWBUKSfl22tJE1d5UdicszAXWweZ8UGISonaxIqYRbSGBKWHqzj9bCG6TdX2lLo376gND2CZohT_sQqRHnydpK_sMgc39HgQ8Qb_xnMCI4Q4qOFDIuSiGtynP24hxjtfdIyHEYv5R9it1V_dEpzzk89hTnYUU4TkN9WMKyKxMsVE8B6-xdGXuQ
+
+{
+  "receiver_id": "22",
+  "message": "Hello"
+}
+
+### Authorization by token, Form Data
+POST http://localhost:8000/api/chat/
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjAzZDA3YmJjM2Q3NWM2OTQyNzUxMGY2MTc0ZWIyZjE2NTQ3ZDRhN2QiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY29ubmVjdGFwcC1sdGQiLCJhdWQiOiJjb25uZWN0YXBwLWx0ZCIsImF1dGhfdGltZSI6MTY5ODA1MjE3OSwidXNlcl9pZCI6IjIyIiwic3ViIjoiMjIiLCJpYXQiOjE2OTgwNTIxNzksImV4cCI6MTY5ODA1NTc3OSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6e30sInNpZ25faW5fcHJvdmlkZXIiOiJjdXN0b20ifX0.ZSAF874I5ba0TbzzE2zd5Up34yD5dE7GPeuNN-v0iq-B3VWRi7bB1_Bkbx8zml6yBOWKskFougdIdq1wc1Ox2cWhXppirS4DBXhZAZSK3jdWiNroCQwS4wJcrkmeZTPD_JlCf-NBQ87pX5_c0bmFQMPapkXLSXv0LWBUKSfl22tJE1d5UdicszAXWweZ8UGISonaxIqYRbSGBKWHqzj9bCG6TdX2lLo376gND2CZohT_sQqRHnydpK_sMgc39HgQ8Qb_xnMCI4Q4qOFDIuSiGtynP24hxjtfdIyHEYv5R9it1V_dEpzzk89hTnYUU4TkN9WMKyKxMsVE8B6-xdGXuQ
+
+--WebAppBoundary
+Content-Disposition: form-data; name="receiver_id"
+
+2
+--WebAppBoundary--
+
+--WebAppBoundary
+Content-Disposition: form-data; name="message"
+
+Hello
+--WebAppBoundary--
