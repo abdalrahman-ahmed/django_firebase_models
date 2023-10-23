@@ -25,7 +25,7 @@ class ChatView(generics.ListCreateAPIView):
     Success returns dict({success: bool, chat: list([dict({id: int, message: str, ...}), ...])})
     Failure returns dict({success: bool, message: str})
 
-    POST: PermissionDenied
+    POST: Unauthorized
     Requires headers;
     name=Authorization: Bearer --Token--
     Requires form-data;
