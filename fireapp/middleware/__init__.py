@@ -25,7 +25,8 @@ class FirebaseAuthenticationMiddleware(MiddlewareMixin):
                         request.user = User()
                         for key in user.keys():
                             setattr(request.user, key, user[key])
-                        setattr(request.user, 'email', user['email'])
+                        if 'username' not in user.keys():
+                            setattr(request.user, 'username', user['email'])
                         setattr(request.user, 'password', None)
                 except Exception as e:
                     request.error_token = {'message': self.error_message, 'detail': e}
