@@ -1,3 +1,4 @@
+import threading
 from datetime import datetime, timezone
 
 from django.contrib.auth.hashers import make_password, check_password
@@ -26,8 +27,8 @@ class UserModel(models.Model):
             if not check_password(password, user['password']):
                 return False
             user.pop('password', None)
-            token = auth.create_custom_token(str(user['id']))
-            return {'success': True, 'access_token': token}
+            custom_token = auth.create_custom_token(str(user['id']))
+            return {'success': True, 'custom_token': custom_token}
 
     @classmethod
     def register(cls, data: dict):
@@ -41,11 +42,33 @@ class UserModel(models.Model):
             password = make_password(password)
             data.update({'id': document_id, 'password': password, 'created': datetime.now(tz=timezone.utc)})
             cls.Model.document(str(document_id)).set(data)
-            token = auth.create_custom_token(str(document_id))
-            return {'success': True, 'access_token': token}
+            custom_token = auth.create_custom_token(str(document_id))
+            return {'success': True, 'custom_token': custom_token}
         else:
             return False
 
     @classmethod
     def document(cls, document_id: str):
         return cls.Model.document(document_id)
+
+    @classmethod
+    def watch(cls, callback: callable = None):
+        # Create an Event for notifying main thread.
+        callback_done = threading.Event()
+        if callback is None:
+            # Create a callback on_snapshot function to capture changes
+            def callback(col_snapshot, changes, read_time):
+                print("Callback received query snapshot.")
+                for change in changes:
+                    uid = change.document.id
+                    document = change.document.to_dict()
+                    status = change.type.name
+                    print(f"{status} User: {uid} {'email' in document and document['email'] or ''}")
+                callback_done.set()
+
+        # Watch the collection query
+        cls.Model.on_snapshot(callback)
+
+    @classmethod
+    def unwatch(cls):
+        cls.Model.on_snapshot(None)

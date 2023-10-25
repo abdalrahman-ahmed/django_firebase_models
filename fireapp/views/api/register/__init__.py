@@ -18,7 +18,7 @@ class RegisterView(generics.CreateAPIView):
     name=password: str
     name=confirm_password: str
 
-    Success returns dict({success: bool, access_token: str})
+    Success returns dict({success: bool, custom_token: str})
     Failure returns dict({success: bool, message: str})
     """
 

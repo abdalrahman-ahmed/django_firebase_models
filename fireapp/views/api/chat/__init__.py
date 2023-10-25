@@ -20,14 +20,14 @@ class ChatView(generics.ListCreateAPIView):
     Chat api endpoint,
     GET: Unauthorized
     Requires headers;
-    name=Authorization: Bearer --Token--
+    name=Authorization: Bearer --accessToken--
 
     Success returns dict({success: bool, chat: list([dict({id: int, message: str, ...}), ...])})
     Failure returns dict({success: bool, message: str})
 
     POST: Unauthorized
     Requires headers;
-    name=Authorization: Bearer --Token--
+    name=Authorization: Bearer --accessToken--
     Requires form-data;
     name=receiver_id: str
     name=message: str

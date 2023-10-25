@@ -1,3 +1,5 @@
+import threading
+
 from django.core.validators import MinLengthValidator
 from django.db import models
 from fireapp.core.firebase import firestore
@@ -27,3 +29,25 @@ class ChatModel(models.Model):
     @property
     def collection(self):
         return self.Model
+
+    @classmethod
+    def watch(cls, callback: callable = None):
+        # Create an Event for notifying main thread.
+        callback_done = threading.Event()
+        if callback is None:
+            # Create a callback on_snapshot function to capture changes
+            def callback(col_snapshot, changes, read_time):
+                print("Callback received query snapshot.")
+                for change in changes:
+                    uid = change.document.id or change.document.uid
+                    document = change.document.to_dict()
+                    status = change.type.name
+                    print(f"{status} Chat: {uid} {document}")
+                callback_done.set()
+
+        # Watch the collection query
+        cls.Model.on_snapshot(callback)
+
+    @classmethod
+    def unwatch(cls):
+        cls.Model.on_snapshot(None)
