@@ -16,8 +16,8 @@ class FirebaseAuthenticationMiddleware(MiddlewareMixin):
             if len(token) > 1:
                 id_token = token[1]
                 try:
-                    jwd = auth.verify_id_token(id_token, check_revoked=True)
-                    document_id = jwd['uid']
+                    jwt = auth.verify_id_token(id_token, check_revoked=True)
+                    document_id = jwt['uid']
                     user = UserModel.document(document_id).get()
                     if user.exists:
                         user = user.to_dict()
